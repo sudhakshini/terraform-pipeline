@@ -1,0 +1,39 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  name: Azure Pipeline
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformCLI@0
+  displayName: 'check terraform version'
+  inputs:
+    command: version
+
+- task: Terraform@1
+  inputs:
+    TemplatePath: 'C:\sudha\terraform'
+    Arguments: 'terraform'
+    InstallTerraform: true
+    ManageState: true
+    ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+    ConnectedServiceNameARM: 'walmart (3b8e02af-8a28-4473-9720-aaaf090d9aa5)'
+    StorageAccountRM: 'cs710032001f7029354'
+    StorageContainerName: 'terraformstate'
